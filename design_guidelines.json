@@ -1,0 +1,144 @@
+{
+  "app_name": "Dan'AI League",
+  "theme": "dark",
+  "style": "premium fintech, modern, slightly futuristic",
+  "design_philosophy": "A premium gamified upskilling platform. The interface should feel like a high-end fintech app mixed with engaging gaming elements. Dark mode provides the canvas, while the vibrant brand gradients create focus, hierarchy, and a sense of reward.",
+  "colors": {
+    "background_base": "#0B152A",
+    "background_surface": "#173A8F",
+    "background_surface_elevated": "#1A42A0",
+    "primary": "#1F88FF",
+    "accent_light_blue": "#3EDCFF",
+    "accent_violet": "#9C6BFF",
+    "accent_neon_pink": "#FF3B9D",
+    "text_primary": "#FFFFFF",
+    "text_secondary": "#B3C7F9",
+    "success": "#3EDCFF",
+    "error": "#FF3B9D"
+  },
+  "gradients": {
+    "impact_points": {
+      "colors": ["#FF3B9D", "#9C6BFF"],
+      "start": { "x": 0, "y": 0 },
+      "end": { "x": 1, "y": 1 },
+      "usage": "Exclusive to Impact Points and rare/premium rewards. MUST include a surrounding glow effect."
+    },
+    "xp_points": {
+      "colors": ["#1F88FF", "#3EDCFF"],
+      "start": { "x": 0, "y": 0 },
+      "end": { "x": 1, "y": 1 },
+      "usage": "Used for daily Learning XP, standard progress bars, and common gamification elements."
+    },
+    "premium_surface": {
+      "colors": ["rgba(23,58,143,0.9)", "rgba(11,21,42,0.9)"],
+      "start": { "x": 0, "y": 0 },
+      "end": { "x": 0, "y": 1 },
+      "usage": "Used for featured cards and premium UI containers."
+    }
+  },
+  "typography": {
+    "font_family": "System Sans-Serif",
+    "hierarchy": {
+      "h1": { "size": "32px", "weight": "bold", "tracking": "tight", "color": "#FFFFFF" },
+      "h2": { "size": "24px", "weight": "600", "color": "#FFFFFF" },
+      "h3": { "size": "18px", "weight": "600", "color": "#FFFFFF" },
+      "body": { "size": "16px", "weight": "regular", "color": "#B3C7F9" },
+      "caption": { "size": "13px", "weight": "500", "color": "#B3C7F9" },
+      "micro": { "size": "11px", "weight": "bold", "text_transform": "uppercase", "letter_spacing": "1px", "color": "#3EDCFF" }
+    }
+  },
+  "ui_elements": {
+    "cards": {
+      "border_radius": "20px",
+      "background": "#173A8F",
+      "border": "1px solid rgba(255, 255, 255, 0.08)",
+      "shadow": "0px 8px 24px rgba(0, 0, 0, 0.2)"
+    },
+    "buttons": {
+      "primary": {
+        "border_radius": "100px",
+        "background": "linear-gradient(90deg, #1F88FF, #3EDCFF)",
+        "text_color": "#0B152A",
+        "font_weight": "bold"
+      },
+      "secondary": {
+        "border_radius": "100px",
+        "background": "rgba(31, 136, 255, 0.15)",
+        "border": "1px solid #1F88FF",
+        "text_color": "#1F88FF"
+      }
+    },
+    "bottom_tabs": {
+      "background": "#0B152A",
+      "border_top": "1px solid rgba(255, 255, 255, 0.05)",
+      "active_icon_color": "#FF3B9D",
+      "inactive_icon_color": "#B3C7F9",
+      "active_indicator": "A glowing dot or short line under the active icon using the neon pink/violet gradient"
+    },
+    "badges": {
+      "knowledge": "Tier-based colors. L1-L5 (Explorer) uses Light Blue, L6-L15 (Challenger) uses Medium Blue, L16-30 (Expert) uses Violet, 31-50 (Mentor) uses Neon Pink.",
+      "rare": "Animated or glowing border with Impact Points gradient."
+    }
+  },
+  "media": {
+    "logo": "https://customer-assets.emergentagent.com/job_c09f872e-dc91-4153-b57f-ec15f90147f8/artifacts/np109bsb_Logo%20Dan%27AI%20League_D%20full.png",
+    "mascot_happy": "https://customer-assets.emergentagent.com/job_c09f872e-dc91-4153-b57f-ec15f90147f8/artifacts/ab3lrs3v_Maia_happy_white%20background.png",
+    "mascot_trophy": "https://customer-assets.emergentagent.com/job_c09f872e-dc91-4153-b57f-ec15f90147f8/artifacts/nbw47g1p_Maia_trophy.png",
+    "mascot_sad": "https://customer-assets.emergentagent.com/job_c09f872e-dc91-4153-b57f-ec15f90147f8/artifacts/mqdaimuz_Maia_sad_white%20background.png"
+  },
+  "screens": {
+    "universal_rules": {
+      "header": "Logo MUST appear centered in the top header of ALL 4 screens.",
+      "mascot": "Mascot MUST appear on EVERY screen fulfilling its specific functional role."
+    },
+    "home_dashboard": {
+      "header_elements": "Centered Logo. On the right, Mascot (Happy/Trophy pose) celebrating progress next to a Streak Counter (Flame icon).",
+      "user_section": "Greeting: 'Hello, Paco Ramirez'. Subtitle: 'Operations Finance, Netherlands'.",
+      "points_overview": "Split view. Left side: Learning XP Progress Bar (out of 120 daily cap) styled with light blue gradient. Right side: Impact Points styled with premium Pink/Violet gradient and an outer glow to look significantly more valuable.",
+      "body_content": [
+        "Continue Learning Card (Prominent CTA)",
+        "Daily Missions List (Checkbox items with XP rewards)",
+        "Badge Preview (Recently unlocked or next available)",
+        "Mini Leaderboard (Top 5 preview)"
+      ]
+    },
+    "learning_screen": {
+      "header_elements": "Centered Logo.",
+      "mascot_role": "Mascot (Happy pose) positioned near the top or floating over content with a speech bubble providing learning tips.",
+      "body_content": [
+        "Lesson Title and visual Progress Indicator",
+        "Microlearning Cards (Stacked or horizontally scrollable)",
+        "XP Reward Indicator (Showing what will be earned)",
+        "Prominent 'Next' navigation button"
+      ]
+    },
+    "quiz_screen": {
+      "header_elements": "Centered Logo.",
+      "mascot_role": "Dynamic positioning. Displays Happy/Celebrating pose for correct answers, Sad/Encouraging pose for incorrect answers. Must be tied to the state of the immediate feedback.",
+      "body_content": [
+        "Question Text (Large, clear typography)",
+        "4 Answer Choice Cards",
+        "Immediate Feedback Banner (Overlay or inline message)",
+        "XP Points earned floating counter",
+        "Power-ups Row (Skip, Retry) styled as floating action buttons or distinct pills"
+      ]
+    },
+    "leaderboard_rewards_screen": {
+      "header_elements": "Centered Logo. Mascot (Trophy pose) prominently celebrating top users near the top of the layout.",
+      "navigation": "Tabs (Weekly / Country / Team / All-time / Personal).",
+      "body_content": [
+        "Ranking List: Top 3 get premium visual treatments (glowing borders, larger avatars).",
+        "Current User Highlight: Sticky view at bottom or prominently highlighted within the list.",
+        "Badge Showcase Grid: Knowledge Badges, Social, Event, and Rare badges.",
+        "Rewards Section: Avatar customization store, Vouchers, and the Top Reward (AI Conference) showcased with the Impact Points gradient."
+      ]
+    }
+  },
+  "technical_instructions": {
+    "file_extension": "Use purely .js files for React Native Expo prototype. Do NOT use .tsx.",
+    "image_handling": "MUST use the Expo Image component from 'expo-image' for all mascot and logo assets to ensure proper caching and performance.",
+    "testing": "All interactive and key informational elements MUST include a 'data-testid' attribute (e.g., data-testid='home-tab-button', data-testid='quiz-answer-1').",
+    "visual_hierarchy": "Impact Points must ALWAYS look visually distinct and more valuable than XP. Use the pink/violet gradient and drop shadows for Impact Points, while keeping XP clean and blue.",
+    "layout_grid": "Adhere strictly to an 8pt grid system for all padding and margins (8, 16, 24, 32px)."
+  }
+}
