@@ -1,9 +1,9 @@
 export const user = {
-  name: "Jürgen Ramirez",
+  name: "Jürgen Esser",
   firstName: "Jürgen",
-  team: "Operations Finance",
-  country: "Netherlands",
-  countryFlag: "🇳🇱",
+  team: "Deputy CEO, Finance, Technology & Data",
+  country: "Paris, France",
+  countryFlag: "🇫🇷",
   streak: 14,
   xpToday: 85,
   xpDailyCap: 120,
@@ -37,25 +37,25 @@ export const badgePreview = [
 ];
 
 export const miniLeaderboard = [
-  { rank: 1, name: "Isabella Rossi", team: "FP&A", points: 12480, avatar: "🧑‍💼", country: "🇮🇹" },
-  { rank: 2, name: "Liam O'Connor", team: "P2P", points: 11320, avatar: "👨‍💼", country: "🇮🇪" },
-  { rank: 3, name: "Aiko Tanaka", team: "Treasury", points: 10940, avatar: "👩‍💼", country: "🇯🇵" },
-  { rank: 4, name: "Mateus Silva", team: "FP&A", points: 9870, avatar: "🧑‍💻", country: "🇧🇷" },
-  { rank: 5, name: "Priya Sharma", team: "Controlling", points: 9510, avatar: "👩‍🎓", country: "🇮🇳" },
+  { rank: 1, name: "Daniela Dalton", team: "FP&A", points: 12480, avatar: "👩‍💼", country: "🇺🇸" },
+  { rank: 2, name: "Antoine Guttinger", team: "P2P", points: 11320, avatar: "👨‍💼", country: "🇨🇭" },
+  { rank: 3, name: "Yves Pellegrino", team: "Treasury", points: 10940, avatar: "🧑‍💼", country: "🇮🇹" },
+  { rank: 4, name: "Carles Vall", team: "FP&A", points: 9870, avatar: "🧑‍💻", country: "🇪🇸" },
+  { rank: 5, name: "Julie Leclerc", team: "Controlling", points: 9510, avatar: "👩‍🎓", country: "🇫🇷" },
 ];
 
 // Full leaderboard with current user highlighted
 export const weeklyLeaderboard = [
-  { rank: 1, name: "Isabella Rossi", team: "FP&A", points: 12480, country: "🇮🇹", isUser: false },
-  { rank: 2, name: "Liam O'Connor", team: "P2P", points: 11320, country: "🇮🇪", isUser: false },
-  { rank: 3, name: "Aiko Tanaka", team: "Treasury", points: 10940, country: "🇯🇵", isUser: false },
-  { rank: 4, name: "Mateus Silva", team: "FP&A", points: 9870, country: "🇧🇷", isUser: false },
-  { rank: 5, name: "Priya Sharma", team: "Controlling", points: 9510, country: "🇮🇳", isUser: false },
-  { rank: 6, name: "Chen Wei", team: "Tax", points: 8920, country: "🇨🇳", isUser: false },
-  { rank: 7, name: "Jürgen Ramirez", team: "Ops Finance", points: 8450, country: "🇳🇱", isUser: true },
-  { rank: 8, name: "Sophie Dubois", team: "FP&A", points: 8120, country: "🇫🇷", isUser: false },
-  { rank: 9, name: "Kwame Mensah", team: "Treasury", points: 7890, country: "🇬🇭", isUser: false },
-  { rank: 10, name: "Emma Schmidt", team: "Controlling", points: 7650, country: "🇩🇪", isUser: false },
+  { rank: 1, name: "Daniela Dalton", team: "FP&A", points: 12480, country: "🇺🇸", isUser: false },
+  { rank: 2, name: "Antoine Guttinger", team: "P2P", points: 11320, country: "🇨🇭", isUser: false },
+  { rank: 3, name: "Yves Pellegrino", team: "Treasury", points: 10940, country: "🇮🇹", isUser: false },
+  { rank: 4, name: "Carles Vall", team: "FP&A", points: 9870, country: "🇪🇸", isUser: false },
+  { rank: 5, name: "Julie Leclerc", team: "Controlling", points: 9510, country: "🇫🇷", isUser: false },
+  { rank: 6, name: "Stephane Gayet", team: "Tax", points: 8920, country: "🇫🇷", isUser: false },
+  { rank: 7, name: "Jürgen Esser", team: "Deputy CEO · Fin/Tech", points: 8450, country: "🇫🇷", isUser: true },
+  { rank: 8, name: "Erik Graf Von Krockow", team: "FP&A", points: 8120, country: "🇩🇪", isUser: false },
+  { rank: 9, name: "Mimie Tsoi", team: "Treasury", points: 7890, country: "🇭🇰", isUser: false },
+  { rank: 10, name: "Mathilde Rodie", team: "Controlling", points: 7650, country: "🇫🇷", isUser: false },
 ];
 
 export const lessonContent = {
