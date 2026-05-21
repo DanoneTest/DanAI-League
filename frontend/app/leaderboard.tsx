@@ -5,6 +5,8 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Modal,
+  Pressable,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
@@ -32,6 +34,7 @@ const tierColor: Record<string, string> = {
 
 export default function LeaderboardScreen() {
   const [tab, setTab] = useState<(typeof leaderboardTabs)[number]>("Weekly");
+  const [showPrize, setShowPrize] = useState(false);
   const top3 = weeklyLeaderboard.slice(0, 3);
   const rest = weeklyLeaderboard.slice(3);
 
@@ -228,28 +231,33 @@ export default function LeaderboardScreen() {
         {rewards
           .filter((r) => r.top)
           .map((r) => (
-            <LinearGradient
+            <TouchableOpacity
               key={r.id}
-              colors={gradients.impact}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
-              style={styles.topReward}
+              activeOpacity={0.92}
+              onPress={() => setShowPrize(true)}
               testID="top-reward"
             >
-              <View style={styles.topRewardIcon}>
-                <Ionicons name="trophy" size={30} color="#fff" />
-              </View>
-              <View style={{ flex: 1 }}>
-                <Text style={styles.topRewardLabel}>GRAND PRIZE</Text>
-                <Text style={styles.topRewardName}>{r.name}</Text>
-                <Text style={styles.topRewardDesc}>{r.desc}</Text>
-              </View>
-              <View style={styles.topRewardCost}>
-                <Ionicons name="diamond" size={14} color="#fff" />
-                <Text style={styles.topRewardCostText}>{r.cost.toLocaleString()}</Text>
-                <Text style={styles.topRewardCostSub}>IP</Text>
-              </View>
-            </LinearGradient>
+              <LinearGradient
+                colors={gradients.impact}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={styles.topReward}
+              >
+                <View style={styles.topRewardIcon}>
+                  <Ionicons name="trophy" size={30} color="#fff" />
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={styles.topRewardLabel}>GRAND PRIZE</Text>
+                  <Text style={styles.topRewardName}>{r.name}</Text>
+                  <Text style={styles.topRewardDesc}>{r.desc}</Text>
+                </View>
+                <View style={styles.topRewardCost}>
+                  <Ionicons name="diamond" size={14} color="#fff" />
+                  <Text style={styles.topRewardCostText}>{r.cost.toLocaleString()}</Text>
+                  <Text style={styles.topRewardCostSub}>IP</Text>
+                </View>
+              </LinearGradient>
+            </TouchableOpacity>
           ))}
 
         {/* Other rewards */}
@@ -303,6 +311,95 @@ export default function LeaderboardScreen() {
 
         <View style={{ height: 24 }} />
       </ScrollView>
+
+      {/* Grand prize celebration modal */}
+      <Modal
+        visible={showPrize}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setShowPrize(false)}
+      >
+        <Pressable
+          style={styles.modalBackdrop}
+          onPress={() => setShowPrize(false)}
+          testID="prize-modal-backdrop"
+        >
+          <Pressable style={styles.modalCard} testID="prize-modal">
+            <LinearGradient
+              colors={gradients.impact}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={styles.modalGlowHeader}
+            >
+              <View style={styles.modalMascotWrap}>
+                <Mascot pose="trophy" size={132} glow={false} />
+              </View>
+              <Text style={styles.modalConfetti}>🎉   ✈️   🏆   ✨</Text>
+            </LinearGradient>
+
+            <View style={styles.modalBody}>
+              <Text style={styles.modalEyebrow}>YOU UNLOCKED THE GRAND PRIZE</Text>
+              <Text style={styles.modalTitle}>Pack your bags!</Text>
+              <Text style={styles.modalSubtitle}>
+                Valid ticket for the AI Conference in Silicon Valley.
+              </Text>
+
+              {/* Faux boarding-pass details */}
+              <View style={styles.ticket} testID="prize-ticket">
+                <View style={styles.ticketRow}>
+                  <View>
+                    <Text style={styles.ticketLabel}>FROM</Text>
+                    <Text style={styles.ticketCode}>CDG</Text>
+                    <Text style={styles.ticketCity}>Paris</Text>
+                  </View>
+                  <Ionicons name="airplane" size={24} color={colors.neonPink} />
+                  <View style={{ alignItems: "flex-end" }}>
+                    <Text style={styles.ticketLabel}>TO</Text>
+                    <Text style={styles.ticketCode}>SFO</Text>
+                    <Text style={styles.ticketCity}>Silicon Valley</Text>
+                  </View>
+                </View>
+                <View style={styles.ticketDivider} />
+                <View style={styles.ticketRow}>
+                  <View>
+                    <Text style={styles.ticketLabel}>PASSENGER</Text>
+                    <Text style={styles.ticketValue}>Jürgen Esser</Text>
+                  </View>
+                  <View style={{ alignItems: "flex-end" }}>
+                    <Text style={styles.ticketLabel}>EVENT</Text>
+                    <Text style={styles.ticketValue}>AI Finance Summit</Text>
+                  </View>
+                </View>
+              </View>
+
+              <TouchableOpacity
+                activeOpacity={0.9}
+                onPress={() => setShowPrize(false)}
+                testID="prize-close-btn"
+                style={{ marginTop: 20 }}
+              >
+                <LinearGradient
+                  colors={gradients.impact}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                  style={styles.modalBtn}
+                >
+                  <Text style={styles.modalBtnText}>Let's go!</Text>
+                  <Ionicons name="arrow-forward" size={18} color="#fff" />
+                </LinearGradient>
+              </TouchableOpacity>
+            </View>
+
+            <TouchableOpacity
+              onPress={() => setShowPrize(false)}
+              style={styles.modalClose}
+              testID="prize-close-x"
+            >
+              <Ionicons name="close" size={20} color="#fff" />
+            </TouchableOpacity>
+          </Pressable>
+        </Pressable>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -466,4 +563,144 @@ const styles = StyleSheet.create({
     shadowColor: colors.neonPink, shadowOpacity: 0.5, shadowRadius: 6,
   },
   costPillImpactText: { color: "#fff", fontWeight: "800", fontSize: 12 },
+
+  // Prize celebration modal
+  modalBackdrop: {
+    flex: 1,
+    backgroundColor: "rgba(11,21,42,0.82)",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 20,
+  },
+  modalCard: {
+    width: "100%",
+    maxWidth: 380,
+    backgroundColor: colors.bgSurface,
+    borderRadius: 28,
+    overflow: "hidden",
+    borderWidth: 1,
+    borderColor: "rgba(255,59,157,0.4)",
+    shadowColor: colors.neonPink,
+    shadowOpacity: 0.6,
+    shadowRadius: 30,
+    shadowOffset: { width: 0, height: 10 },
+    elevation: 14,
+  },
+  modalGlowHeader: {
+    paddingTop: 20,
+    paddingBottom: 12,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  modalMascotWrap: {
+    width: 140,
+    height: 140,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(255,255,255,0.18)",
+    borderRadius: 70,
+    borderWidth: 2,
+    borderColor: "rgba(255,255,255,0.35)",
+  },
+  modalConfetti: {
+    fontSize: 18,
+    letterSpacing: 8,
+    marginTop: 10,
+    color: "#fff",
+  },
+  modalBody: {
+    padding: 20,
+    paddingTop: 16,
+  },
+  modalEyebrow: {
+    color: colors.neonPink,
+    fontSize: 10,
+    fontWeight: "800",
+    letterSpacing: 1.4,
+    textAlign: "center",
+  },
+  modalTitle: {
+    color: colors.textPrimary,
+    fontSize: 28,
+    fontWeight: "800",
+    textAlign: "center",
+    marginTop: 6,
+    letterSpacing: -0.4,
+  },
+  modalSubtitle: {
+    color: colors.textSecondary,
+    fontSize: 14,
+    textAlign: "center",
+    marginTop: 6,
+    lineHeight: 20,
+  },
+  ticket: {
+    marginTop: 18,
+    padding: 16,
+    borderRadius: 18,
+    backgroundColor: colors.bgBase,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.08)",
+  },
+  ticketRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  ticketLabel: {
+    color: colors.textSecondary,
+    fontSize: 9,
+    fontWeight: "800",
+    letterSpacing: 1.2,
+  },
+  ticketCode: {
+    color: colors.textPrimary,
+    fontSize: 22,
+    fontWeight: "800",
+    marginTop: 2,
+    letterSpacing: 1,
+  },
+  ticketCity: {
+    color: colors.textSecondary,
+    fontSize: 11,
+    fontWeight: "600",
+    marginTop: 1,
+  },
+  ticketDivider: {
+    height: 1,
+    backgroundColor: "rgba(255,255,255,0.08)",
+    marginVertical: 12,
+  },
+  ticketValue: {
+    color: colors.textPrimary,
+    fontSize: 13,
+    fontWeight: "700",
+    marginTop: 4,
+  },
+  modalBtn: {
+    height: 50,
+    borderRadius: 100,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+    shadowColor: colors.neonPink,
+    shadowOpacity: 0.5,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 4 },
+  },
+  modalBtnText: { color: "#fff", fontWeight: "800", fontSize: 15 },
+  modalClose: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: "rgba(11,21,42,0.6)",
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.2)",
+  },
 });
