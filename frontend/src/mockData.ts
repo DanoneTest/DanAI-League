@@ -1,6 +1,6 @@
 export const user = {
-  name: "Paco Ramirez",
-  firstName: "Paco",
+  name: "Jürgen Ramirez",
+  firstName: "Jürgen",
   team: "Operations Finance",
   country: "Netherlands",
   countryFlag: "🇳🇱",
@@ -52,7 +52,7 @@ export const weeklyLeaderboard = [
   { rank: 4, name: "Mateus Silva", team: "FP&A", points: 9870, country: "🇧🇷", isUser: false },
   { rank: 5, name: "Priya Sharma", team: "Controlling", points: 9510, country: "🇮🇳", isUser: false },
   { rank: 6, name: "Chen Wei", team: "Tax", points: 8920, country: "🇨🇳", isUser: false },
-  { rank: 7, name: "Paco Ramirez", team: "Ops Finance", points: 8450, country: "🇳🇱", isUser: true },
+  { rank: 7, name: "Jürgen Ramirez", team: "Ops Finance", points: 8450, country: "🇳🇱", isUser: true },
   { rank: 8, name: "Sophie Dubois", team: "FP&A", points: 8120, country: "🇫🇷", isUser: false },
   { rank: 9, name: "Kwame Mensah", team: "Treasury", points: 7890, country: "🇬🇭", isUser: false },
   { rank: 10, name: "Emma Schmidt", team: "Controlling", points: 7650, country: "🇩🇪", isUser: false },
@@ -104,16 +104,20 @@ export const quizQuestion = {
   total: 5,
   xpOnCorrect: 15,
   question:
-    "Which practice most reduces hallucinations when asking an AI to analyze a monthly P&L?",
+    "You're preparing the monthly variance commentary for the CFO using AI. Which prompt is most likely to produce a usable FP&A output?",
   answers: [
-    { id: "a", text: "Ask in a very short sentence" },
-    { id: "b", text: "Paste the P&L data and ask it to cite only those numbers" },
-    { id: "c", text: "Let the AI invent benchmarks from memory" },
-    { id: "d", text: "Use as many emojis as possible" },
+    { id: "a", text: "“Explain why the numbers moved.”" },
+    {
+      id: "b",
+      text:
+        "“Act as a senior FP&A analyst. Using the attached Actuals vs Budget table, list the top 5 variances >€50k with likely drivers (volume, price, mix, FX) in 1-line bullets.”",
+    },
+    { id: "c", text: "“Make it sound smart for the CFO and add headwinds & tailwinds.”" },
+    { id: "d", text: "“Summarise the P&L using your general knowledge of FMCG benchmarks.”" },
   ],
   correctId: "b",
   explanation:
-    "Grounding the model in the actual data and restricting answers to what you provided is the single biggest lever against hallucinations.",
+    "A strong FP&A prompt sets the role, grounds the model in your actual data, defines a materiality threshold, and asks for the standard variance drivers (volume / price / mix / FX) — the building blocks of any variance bridge.",
 };
 
 export const badges = [

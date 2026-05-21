@@ -26,7 +26,7 @@ export default function ScreenHeader({ streak, rightLabel }: Props) {
           </View>
         )}
         <TouchableOpacity style={styles.avatar} testID="header-avatar">
-          <Text style={styles.avatarText}>PR</Text>
+          <Text style={styles.avatarText}>JR</Text>
         </TouchableOpacity>
       </View>
     </View>
