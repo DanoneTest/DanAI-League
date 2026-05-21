@@ -99,6 +99,48 @@ export const lessonContent = {
   ],
 };
 
+export const lesson2 = {
+  id: "variance-analysis",
+  title: "AI-Powered Variance Analysis: From Hours to Minutes",
+  series: "FP&A Excellence",
+  collection: "Finance Leadership Series",
+  icon: "trending-up" as const,
+  xpReward: 60,
+  duration: "12 min",
+  hook:
+    "Traditional variance analysis requires manual investigation of hundreds of line items. AI can analyze patterns, identify anomalies, and draft executive explanations in minutes.",
+  sections: [
+    {
+      id: "challenge",
+      label: "The Challenge",
+      body:
+        "Monthly variance analysis for a large P&L can take 2–3 days: reviewing actuals vs. budget, identifying material variances, investigating root causes, and writing commentary for leadership.",
+    },
+    {
+      id: "solution",
+      label: "AI Solution",
+      body:
+        "Use AI to analyze variance data, identify patterns across dimensions (product, region, period), and generate draft explanations that you can validate and refine.",
+    },
+  ],
+  steps: [
+    "Export your variance report to Excel (actuals, budget, variance, %)",
+    "Use Copilot in Excel to identify top 10 variances and common patterns",
+    "Feed the analysis to AI with context about your business drivers",
+    "Request structured commentary by materiality threshold",
+  ],
+  examplePrompt:
+    "Analyze this variance report for Q1 2026. Identify the top 10 material variances (>$500K or >15%). For each, suggest likely root causes based on: 1) Prior period trends, 2) Known market conditions (supply chain, FX, pricing), 3) Seasonal patterns. Structure the output as: Executive Summary (3 bullets), Detailed Variance Analysis (table), Recommended Actions. Tone: CFO-ready, data-driven, actionable.",
+  proTips: [
+    "Always specify your materiality threshold (absolute $ and %)",
+    "Include business context: recent initiatives, market changes, known events",
+    "Ask AI to separate one-time vs. recurring variances",
+    "Use AI output as a first draft — validate with business partners before finalizing",
+  ],
+  timeSaved:
+    "This approach reduces variance analysis from 2–3 days to 4–6 hours, allowing you to spend more time on strategic insights and action planning.",
+};
+
 export const quizQuestion = {
   index: 3,
   total: 5,
