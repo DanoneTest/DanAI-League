@@ -186,6 +186,23 @@ function Lesson1({ onFinish }: { onFinish: () => void }) {
           </View>
         ))}
 
+        {/* Time saved (value framing on Lesson 1 too) */}
+        <LinearGradient
+          colors={gradients.impact}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={styles.timeSavedCardL1}
+          testID="lesson-1-timesaved"
+        >
+          <View style={styles.timeSavedIconL1}>
+            <Ionicons name="time" size={18} color="#fff" />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.timeSavedLabelL1}>TIME SAVED</Text>
+            <Text style={styles.timeSavedBodyL1}>{lessonContent.timeSaved}</Text>
+          </View>
+        </LinearGradient>
+
         <View style={{ height: 90 }} />
       </ScrollView>
 
@@ -588,4 +605,23 @@ const styles = StyleSheet.create({
     justifyContent: "center", gap: 8,
   },
   nextBtnText: { color: "#0B152A", fontWeight: "800", fontSize: 15 },
+
+  // Time saved (compact, lesson 1)
+  timeSavedCardL1: {
+    flexDirection: "row", gap: 12, padding: 14,
+    borderRadius: 18, marginTop: spacing.lg,
+    shadowColor: colors.neonPink, shadowOpacity: 0.4,
+    shadowRadius: 12, shadowOffset: { width: 0, height: 5 },
+    alignItems: "center",
+  },
+  timeSavedIconL1: {
+    width: 36, height: 36, borderRadius: 11,
+    backgroundColor: "rgba(255,255,255,0.22)",
+    alignItems: "center", justifyContent: "center",
+  },
+  timeSavedLabelL1: {
+    color: "#fff", fontSize: 9, fontWeight: "800",
+    letterSpacing: 1.4, opacity: 0.85,
+  },
+  timeSavedBodyL1: { color: "#fff", fontSize: 12, lineHeight: 17, marginTop: 3, fontWeight: "600" },
 });

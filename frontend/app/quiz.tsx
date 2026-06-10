@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Animated,
+  Easing,
+  Modal,
+  Pressable,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
@@ -21,8 +25,22 @@ export default function QuizScreen() {
   const router = useRouter();
   const [selected, setSelected] = useState<string | null>(null);
   const [state, setState] = useState<State>("idle");
-  const [retries, setRetries] = useState(2);
-  const [skips, setSkips] = useState(1);
+  const [retries, setRetries] = useState(user.powerUps.retry);
+  const [skips, setSkips] = useState(user.powerUps.skip);
+  const [showPowerInfo, setShowPowerInfo] = useState(false);
+  const xpAnim = useRef(new Animated.Value(0)).current;
+  const confettiAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    if (state === "correct") {
+      xpAnim.setValue(0);
+      confettiAnim.setValue(0);
+      Animated.parallel([
+        Animated.timing(xpAnim, { toValue: 1, duration: 700, easing: Easing.out(Easing.cubic), useNativeDriver: true }),
+        Animated.timing(confettiAnim, { toValue: 1, duration: 1200, easing: Easing.out(Easing.quad), useNativeDriver: true }),
+      ]).start();
+    }
+  }, [state, xpAnim, confettiAnim]);
 
   const handleSelect = (id: string) => {
     if (state !== "idle") return;
@@ -201,11 +219,68 @@ export default function QuizScreen() {
               </Text>
             </View>
             <Text style={styles.feedbackText}>{quizQuestion.explanation}</Text>
+            {state === "correct" && (
+              <>
+                {/* Confetti particles */}
+                <View pointerEvents="none" style={StyleSheet.absoluteFillObject}>
+                  {[..."🎉✨🏆⭐💎🎯"].map((emoji, i) => (
+                    <Animated.Text
+                      key={i}
+                      style={{
+                        position: "absolute",
+                        top: -10,
+                        left: `${(i + 1) * 14}%`,
+                        fontSize: 16,
+                        opacity: confettiAnim,
+                        transform: [
+                          {
+                            translateY: confettiAnim.interpolate({
+                              inputRange: [0, 1],
+                              outputRange: [0, 60 + i * 4],
+                            }),
+                          },
+                          {
+                            rotate: confettiAnim.interpolate({
+                              inputRange: [0, 1],
+                              outputRange: ["0deg", `${(i % 2 ? 1 : -1) * 360}deg`],
+                            }),
+                          },
+                        ],
+                      }}
+                    >
+                      {emoji}
+                    </Animated.Text>
+                  ))}
+                </View>
+                {/* Floating +XP */}
+                <Animated.View
+                  pointerEvents="none"
+                  style={[
+                    styles.floatXp,
+                    {
+                      opacity: xpAnim.interpolate({ inputRange: [0, 0.8, 1], outputRange: [0, 1, 0.6] }),
+                      transform: [
+                        { translateY: xpAnim.interpolate({ inputRange: [0, 1], outputRange: [10, -20] }) },
+                        { scale: xpAnim.interpolate({ inputRange: [0, 1], outputRange: [0.6, 1.1] }) },
+                      ],
+                    },
+                  ]}
+                >
+                  <Text style={styles.floatXpText}>+{quizQuestion.xpOnCorrect} XP</Text>
+                </Animated.View>
+              </>
+            )}
           </LinearGradient>
         )}
 
         {/* Power-ups */}
-        <Text style={styles.sectionTitle}>Power-ups</Text>
+        <View style={styles.powerHeader}>
+          <Text style={styles.sectionTitle}>Power-ups</Text>
+          <TouchableOpacity onPress={() => setShowPowerInfo(true)} testID="powerup-info-btn" style={styles.infoBtn}>
+            <Ionicons name="information-circle-outline" size={16} color={colors.lightBlue} />
+            <Text style={styles.infoBtnText}>How do these work?</Text>
+          </TouchableOpacity>
+        </View>
         <View style={styles.powerupsRow}>
           <TouchableOpacity
             style={[styles.powerup, skips === 0 && styles.powerupDisabled]}
@@ -260,6 +335,47 @@ export default function QuizScreen() {
           </TouchableOpacity>
         </View>
       )}
+
+      {/* Power-ups info modal */}
+      <Modal visible={showPowerInfo} transparent animationType="fade" onRequestClose={() => setShowPowerInfo(false)}>
+        <Pressable style={styles.modalBackdrop} onPress={() => setShowPowerInfo(false)}>
+          <Pressable style={styles.modalSheet} testID="powerup-modal">
+            <TouchableOpacity onPress={() => setShowPowerInfo(false)} style={styles.modalClose}>
+              <Ionicons name="close" size={18} color="#fff" />
+            </TouchableOpacity>
+            <Text style={styles.modalEyebrow}>POWER-UPS · HOW THEY WORK</Text>
+            <Text style={styles.modalTitle}>Use them wisely</Text>
+            <View style={styles.powerInfoRow}>
+              <View style={[styles.powerInfoIcon, { backgroundColor: "rgba(62,220,255,0.16)" }]}>
+                <Ionicons name="play-skip-forward" size={18} color={colors.lightBlue} />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={styles.powerInfoTitle}>Skip question</Text>
+                <Text style={styles.powerInfoBody}>Skip a tricky question with no XP penalty. <Text style={styles.bold}>Earn 1</Text> for every 5-day streak.</Text>
+              </View>
+            </View>
+            <View style={styles.powerInfoRow}>
+              <View style={[styles.powerInfoIcon, { backgroundColor: "rgba(255,59,157,0.16)" }]}>
+                <Ionicons name="refresh" size={18} color={colors.neonPink} />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={styles.powerInfoTitle}>Retry answer</Text>
+                <Text style={styles.powerInfoBody}>Try again after a wrong answer with no XP penalty. <Text style={styles.bold}>Earn 1</Text> by completing a Learn module.</Text>
+              </View>
+            </View>
+            <View style={styles.powerInfoRow}>
+              <View style={[styles.powerInfoIcon, { backgroundColor: "rgba(156,107,255,0.16)" }]}>
+                <Ionicons name="bulb" size={18} color={colors.violet} />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={styles.powerInfoTitle}>Hint (coming soon)</Text>
+                <Text style={styles.powerInfoBody}>Reveal one wrong answer. <Text style={styles.bold}>Earn 1</Text> by sharing an AI use case (Impact mission).</Text>
+              </View>
+            </View>
+            <Text style={styles.powerInfoFootnote}>Your balance: <Text style={styles.bold}>{skips}× Skip · {retries}× Retry · {user.powerUps.hint}× Hint</Text></Text>
+          </Pressable>
+        </Pressable>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -356,4 +472,31 @@ const styles = StyleSheet.create({
     justifyContent: "center", gap: 8,
   },
   nextBtnText: { color: "#fff", fontWeight: "800", fontSize: 15 },
+
+  // Power-ups header
+  powerHeader: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: spacing.lg },
+  infoBtn: { flexDirection: "row", alignItems: "center", gap: 4 },
+  infoBtnText: { color: colors.lightBlue, fontSize: 11, fontWeight: "700" },
+
+  // Floating +XP
+  floatXp: {
+    position: "absolute", top: 14, right: 14,
+    backgroundColor: "rgba(255,255,255,0.22)",
+    paddingHorizontal: 10, paddingVertical: 4,
+    borderRadius: 100,
+  },
+  floatXpText: { color: "#fff", fontSize: 13, fontWeight: "800" },
+
+  // Power-ups modal
+  modalBackdrop: { flex: 1, backgroundColor: "rgba(11,21,42,0.82)", alignItems: "center", justifyContent: "center", padding: 20 },
+  modalSheet: { width: "100%", maxWidth: 380, backgroundColor: colors.bgSurface, borderRadius: 24, padding: 20, borderWidth: 1, borderColor: colors.borderSubtle },
+  modalClose: { position: "absolute", top: 12, right: 12, width: 30, height: 30, borderRadius: 15, backgroundColor: "rgba(11,21,42,0.6)", alignItems: "center", justifyContent: "center", zIndex: 1, borderWidth: 1, borderColor: "rgba(255,255,255,0.18)" },
+  modalEyebrow: { color: colors.neonPink, fontSize: 10, fontWeight: "800", letterSpacing: 1.4 },
+  modalTitle: { color: colors.textPrimary, fontSize: 22, fontWeight: "800", marginTop: 4, marginBottom: 12 },
+  powerInfoRow: { flexDirection: "row", gap: 12, paddingVertical: 10, borderTopWidth: 1, borderTopColor: "rgba(255,255,255,0.05)" },
+  powerInfoIcon: { width: 36, height: 36, borderRadius: 10, alignItems: "center", justifyContent: "center" },
+  powerInfoTitle: { color: colors.textPrimary, fontSize: 13, fontWeight: "800" },
+  powerInfoBody: { color: colors.textSecondary, fontSize: 12, marginTop: 3, lineHeight: 17 },
+  powerInfoFootnote: { color: colors.textSecondary, fontSize: 12, marginTop: 14, textAlign: "center" },
+  bold: { color: colors.textPrimary, fontWeight: "800" },
 });
