@@ -40,7 +40,7 @@ export const spacing = {
 
 export const assets = {
   logo:
-    "https://customer-assets.emergentagent.com/job_c09f872e-dc91-4153-b57f-ec15f90147f8/artifacts/np109bsb_Logo%20Dan%27AI%20League_D%20full.png",
+    "https://customer-assets.emergentagent.com/job_ai-upskill-hub-3/artifacts/7tftca5h_Logo_D_only-removebg-preview.png",
   mascotHappy:
     "https://customer-assets.emergentagent.com/job_c09f872e-dc91-4153-b57f-ec15f90147f8/artifacts/ab3lrs3v_Maia_happy_white%20background.png",
   mascotTrophy:
