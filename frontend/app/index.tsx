@@ -25,6 +25,7 @@ import {
 import ScreenHeader from "../src/components/ScreenHeader";
 import Mascot from "../src/components/Mascot";
 import GradientCard from "../src/components/GradientCard";
+import OnboardingFlow from "../src/onboarding/OnboardingFlow";
 
 const tierColor: Record<string, string> = {
   explorer: "#3EDCFF",
@@ -39,6 +40,7 @@ export default function HomeScreen() {
   const [showHelp, setShowHelp] = useState(false);
   const [showNotif, setShowNotif] = useState(false);
   const [showInfo, setShowInfo] = useState<null | "xp" | "ip">(null);
+  const [showPersona, setShowPersona] = useState(false);
   const xpPercent = Math.min(user.xpToday / user.xpDailyCap, 1);
   const unreadCount = notifications.filter((n) => n.unread).length;
 
@@ -270,6 +272,25 @@ export default function HomeScreen() {
       <InfoModal visible={showHelp} onClose={() => setShowHelp(false)} testID="help-modal">
         <Text style={styles.modalEyebrow}>HELP CENTER</Text>
         <Text style={styles.modalTitle}>Need a hand?</Text>
+        <TouchableOpacity
+          activeOpacity={0.85}
+          onPress={() => {
+            setShowHelp(false);
+            setTimeout(() => setShowPersona(true), 280);
+          }}
+          testID="help-persona-row"
+        >
+          <View style={styles.helpRow}>
+            <View style={[styles.helpIcon, { backgroundColor: "rgba(255,59,157,0.16)" }]}>
+              <Ionicons name="ribbon" size={18} color={colors.neonPink} />
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.helpTitle}>Your AI Persona</Text>
+              <Text style={styles.helpDesc}>Re-take the assessment or see your benchmark</Text>
+            </View>
+            <Ionicons name="chevron-forward" size={16} color={colors.textSecondary} />
+          </View>
+        </TouchableOpacity>
         <HelpRow icon="book-outline" title="App tour & features" desc="Take a 60-second guided tour" />
         <HelpRow icon="person-outline" title="Your account & profile" desc="Email, language, password" />
         <HelpRow icon="globe-outline" title="Language preferences" desc="EN · FR · ES · DE · NL" />
@@ -278,6 +299,10 @@ export default function HomeScreen() {
         <HelpRow icon="chatbubble-ellipses-outline" title="Contact support" desc="Reply within 1 working day" />
       </InfoModal>
 
+      {/* AI Persona revisit (forced re-open of onboarding) */}
+      {showPersona && (
+        <OnboardingFlow forceShow onClose={() => setShowPersona(false)} />
+      )}
       {/* Notifications modal */}
       <InfoModal visible={showNotif} onClose={() => setShowNotif(false)} testID="notif-modal">
         <Text style={styles.modalEyebrow}>NOTIFICATIONS · {unreadCount} NEW</Text>

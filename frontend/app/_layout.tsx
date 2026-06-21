@@ -5,6 +5,7 @@ import { View, StyleSheet, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { colors, gradients } from "../src/theme";
+import OnboardingFlow from "../src/onboarding/OnboardingFlow";
 
 type TabIconProps = { name: keyof typeof Ionicons.glyphMap; focused: boolean; label: string };
 
@@ -83,6 +84,7 @@ export default function RootLayout() {
           }}
         />
       </Tabs>
+      <OnboardingFlow />
     </>
   );
 }
