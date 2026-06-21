@@ -119,6 +119,7 @@ type TourSlide = {
 
 const tourSlides: TourSlide[] = [
   {
+    // NOTE: slide 0 is rendered by `renderWelcome` — this entry is a fallback only.
     eyebrow: "WELCOME",
     title: "Welcome to Dan'AI League",
     subtitle: "Your personalized journey to AI adoption in Finance.",
@@ -127,7 +128,7 @@ const tourSlides: TourSlide[] = [
     icon: "sparkles",
     accent: ["#FF3B9D", "#9C6BFF"] as const,
     mascot: "happy",
-    cta: "Get Started",
+    cta: "Start My Journey",
   },
   {
     eyebrow: "STEP 1 OF 4",
@@ -235,7 +236,93 @@ export default function OnboardingFlow({ forceShow = false, onClose }: Props) {
     return scoreToPersona(score);
   }, [q1, q2, savedPersona]);
 
-  /* ------------------- render helpers ------------------- */
+  const renderWelcome = () => {
+    const accent = ["#FF3B9D", "#9C6BFF"] as const;
+    const pillars: { icon: keyof typeof Ionicons.glyphMap; title: string; desc: string; tint: readonly [string, string] }[] = [
+      { icon: "book", title: "Learn", desc: "Build AI knowledge through curated content and learning paths.", tint: ["#1F88FF", "#3EDCFF"] as const },
+      { icon: "rocket", title: "Apply", desc: "Turn learning into action through practical Finance use cases.", tint: ["#9C6BFF", "#1F88FF"] as const },
+      { icon: "trophy", title: "Lead", desc: "Help accelerate AI adoption across teams and functions.", tint: ["#FF3B9D", "#9C6BFF"] as const },
+    ];
+
+    return (
+      <Animated.View style={[styles.flex1, { opacity: fade }]}>
+        <ScrollView contentContainerStyle={styles.welcomeScroll} showsVerticalScrollIndicator={false}>
+          <LinearGradient
+            colors={[accent[0] + "33", "transparent"] as [string, string]}
+            style={styles.tourGlow}
+          />
+
+          <Text style={styles.welcomeEyebrow}>WELCOME TO DAN'AI LEAGUE</Text>
+          <Text style={styles.welcomeHeadline}>From AI Content{"\n"}to AI Adoption</Text>
+          <View style={styles.welcomeDivider} />
+          <Text style={styles.welcomeSubhead}>
+            Finance already has access to great AI tools and resources. The next step is turning <Text style={styles.welcomeBold}>awareness into adoption</Text> and <Text style={styles.welcomeBold}>learning into everyday impact</Text>.
+          </Text>
+
+          <Text style={styles.welcomeMission}>
+            Dan'AI League is designed to help Finance teams <Text style={styles.welcomeBold}>discover, learn, and apply AI</Text> through engaging experiences, practical challenges, and real-world use cases.
+          </Text>
+          <Text style={styles.welcomeMovement}>Together, we are building the future of Finance.</Text>
+
+          {/* Connected pillars */}
+          <View style={styles.pillarsWrap} testID="welcome-pillars">
+            {pillars.map((p, i) => (
+              <React.Fragment key={p.title}>
+                <View style={styles.pillarRow}>
+                  <LinearGradient
+                    colors={p.tint}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                    style={styles.pillarIcon}
+                  >
+                    <Ionicons name={p.icon} size={22} color="#fff" />
+                  </LinearGradient>
+                  <View style={{ flex: 1 }}>
+                    <Text style={styles.pillarTitle}>{p.title}</Text>
+                    <Text style={styles.pillarDesc}>{p.desc}</Text>
+                  </View>
+                </View>
+                {i < pillars.length - 1 && (
+                  <View style={styles.pillarConnector}>
+                    <View style={styles.pillarConnectorLine} />
+                    <Ionicons name="chevron-down" size={16} color={colors.violet} />
+                  </View>
+                )}
+              </React.Fragment>
+            ))}
+          </View>
+
+          {/* Highlight card */}
+          <LinearGradient
+            colors={["rgba(255,59,157,0.16)", "rgba(156,107,255,0.12)"] as [string, string]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={styles.highlightCard}
+          >
+            <View style={styles.highlightIcon}>
+              <Ionicons name="sparkles" size={20} color={colors.neonPink} />
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.highlightTitle}>AI adoption starts with one small step.</Text>
+              <Text style={styles.highlightBody}>
+                Complete your AI Adoption Assessment to discover your starting point and unlock your personalized journey.
+              </Text>
+            </View>
+          </LinearGradient>
+        </ScrollView>
+
+        <View style={styles.footer}>
+          <PrimaryButton
+            label="Start My Journey"
+            onPress={() => animateTo(1)}
+            testID="onb-tour-cta-0"
+            accent={accent}
+          />
+        </View>
+      </Animated.View>
+    );
+  };
+
   const renderTour = () => {
     const slide = tourSlides[step];
     return (
@@ -462,7 +549,8 @@ export default function OnboardingFlow({ forceShow = false, onClose }: Props) {
         )}
 
         {/* Body */}
-        {step <= 4 && renderTour()}
+        {step === 0 && renderWelcome()}
+        {step >= 1 && step <= 4 && renderTour()}
         {step === 5 && renderQuestion(0)}
         {step === 6 && renderQuestion(1)}
         {step === 7 && renderQuestion(2)}
@@ -662,4 +750,68 @@ const styles = StyleSheet.create({
     shadowColor: colors.neonPink, shadowOpacity: 0.5, shadowRadius: 12, shadowOffset: { width: 0, height: 4 },
   },
   btnText: { color: "#fff", fontWeight: "800", fontSize: 15 },
+
+  // ---- WELCOME screen ----
+  welcomeScroll: { padding: spacing.md, paddingTop: 12, paddingBottom: 120 },
+  welcomeEyebrow: {
+    color: colors.neonPink, fontSize: 10, fontWeight: "800",
+    letterSpacing: 1.6, marginBottom: 12,
+  },
+  welcomeHeadline: {
+    color: colors.textPrimary, fontSize: 32, fontWeight: "800",
+    letterSpacing: -0.6, lineHeight: 38,
+  },
+  welcomeDivider: {
+    width: 48, height: 3, borderRadius: 100,
+    backgroundColor: colors.neonPink,
+    marginTop: 14, marginBottom: 14,
+  },
+  welcomeSubhead: {
+    color: colors.textSecondary, fontSize: 14, lineHeight: 22, fontWeight: "500",
+  },
+  welcomeBold: { color: colors.textPrimary, fontWeight: "800" },
+  welcomeMission: {
+    color: colors.textSecondary, fontSize: 14, lineHeight: 22,
+    marginTop: 14, fontWeight: "500",
+  },
+  welcomeMovement: {
+    color: colors.lightBlue, fontSize: 14, fontWeight: "800",
+    fontStyle: "italic", marginTop: 12,
+  },
+  pillarsWrap: { marginTop: 24 },
+  pillarRow: {
+    flexDirection: "row", alignItems: "center", gap: 14,
+    padding: 14, borderRadius: radii.lg,
+    backgroundColor: colors.bgSurface,
+    borderWidth: 1, borderColor: colors.borderSubtle,
+  },
+  pillarIcon: {
+    width: 44, height: 44, borderRadius: 12,
+    alignItems: "center", justifyContent: "center",
+    shadowColor: colors.neonPink, shadowOpacity: 0.4,
+    shadowRadius: 10, shadowOffset: { width: 0, height: 4 },
+  },
+  pillarTitle: { color: colors.textPrimary, fontSize: 17, fontWeight: "800" },
+  pillarDesc: { color: colors.textSecondary, fontSize: 12, lineHeight: 17, marginTop: 3 },
+  pillarConnector: { alignItems: "center", paddingVertical: 4 },
+  pillarConnectorLine: {
+    width: 2, height: 18, borderRadius: 2,
+    backgroundColor: "rgba(156,107,255,0.55)",
+  },
+
+  highlightCard: {
+    flexDirection: "row", gap: 12,
+    padding: 16, borderRadius: radii.xl,
+    borderWidth: 1, borderColor: "rgba(255,59,157,0.35)",
+    marginTop: 22,
+    shadowColor: colors.neonPink, shadowOpacity: 0.35,
+    shadowRadius: 16, shadowOffset: { width: 0, height: 6 },
+  },
+  highlightIcon: {
+    width: 40, height: 40, borderRadius: 12,
+    backgroundColor: "rgba(255,59,157,0.18)",
+    alignItems: "center", justifyContent: "center",
+  },
+  highlightTitle: { color: colors.textPrimary, fontSize: 14, fontWeight: "800" },
+  highlightBody: { color: colors.textSecondary, fontSize: 12, lineHeight: 17, marginTop: 4 },
 });
