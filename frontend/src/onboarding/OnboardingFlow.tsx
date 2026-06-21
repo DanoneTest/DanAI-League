@@ -11,12 +11,13 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
+import { Image } from "expo-image";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Logo from "../components/Logo";
 import Mascot from "../components/Mascot";
-import { colors, gradients, radii, spacing, typography } from "../theme";
+import { assets, colors, gradients, radii, spacing, typography } from "../theme";
 
 /* ------------------- storage keys ------------------- */
 const KEY_DONE = "danai_onboarding_done";
@@ -131,40 +132,22 @@ const tourSlides: TourSlide[] = [
     cta: "Start My Journey",
   },
   {
-    eyebrow: "STEP 1 OF 4",
-    title: "Learn",
+    eyebrow: "STEP 1 OF 2",
+    title: "Learn & Apply",
     body:
-      "Explore curated AI content designed specifically for Finance teams. Build skills through short modules, practical examples, and guided learning paths.",
+      "Build practical AI skills through curated Finance content, then turn learning into action through real use cases and challenges.",
     icon: "book",
     accent: ["#1F88FF", "#3EDCFF"] as const,
     cta: "Next",
   },
   {
-    eyebrow: "STEP 2 OF 4",
-    title: "Compete",
+    eyebrow: "STEP 2 OF 2",
+    title: "Compete & Grow",
     body:
-      "Earn points, unlock badges, and climb the leaderboard as you complete learning activities and challenges.",
+      "Earn points, unlock badges, climb the leaderboard, and track your progress as you advance your AI adoption journey.",
     icon: "trophy",
-    accent: ["#9C6BFF", "#FF3B9D"] as const,
+    accent: ["#FF3B9D", "#9C6BFF"] as const,
     mascot: "trophy",
-    cta: "Next",
-  },
-  {
-    eyebrow: "STEP 3 OF 4",
-    title: "Apply",
-    body:
-      "Turn knowledge into impact by discovering AI use cases that can improve the way you work.",
-    icon: "bulb",
-    accent: ["#FF3B9D", "#1F88FF"] as const,
-    cta: "Next",
-  },
-  {
-    eyebrow: "STEP 4 OF 4",
-    title: "Track Your Growth",
-    body:
-      "Follow your learning journey, monitor achievements, and continue advancing your AI adoption maturity.",
-    icon: "trending-up",
-    accent: ["#3EDCFF", "#9C6BFF"] as const,
     cta: "Start Assessment",
   },
 ];
@@ -238,77 +221,49 @@ export default function OnboardingFlow({ forceShow = false, onClose }: Props) {
 
   const renderWelcome = () => {
     const accent = ["#FF3B9D", "#9C6BFF"] as const;
-    const pillars: { icon: keyof typeof Ionicons.glyphMap; title: string; desc: string; tint: readonly [string, string] }[] = [
-      { icon: "book", title: "Learn", desc: "Build AI knowledge through curated content and learning paths.", tint: ["#1F88FF", "#3EDCFF"] as const },
-      { icon: "rocket", title: "Apply", desc: "Turn learning into action through practical Finance use cases.", tint: ["#9C6BFF", "#1F88FF"] as const },
-      { icon: "trophy", title: "Lead", desc: "Help accelerate AI adoption across teams and functions.", tint: ["#FF3B9D", "#9C6BFF"] as const },
-    ];
-
     return (
       <Animated.View style={[styles.flex1, { opacity: fade }]}>
         <ScrollView contentContainerStyle={styles.welcomeScroll} showsVerticalScrollIndicator={false}>
+          {/* Soft radial glow */}
           <LinearGradient
-            colors={[accent[0] + "33", "transparent"] as [string, string]}
+            colors={[accent[0] + "30", "transparent"] as [string, string]}
             style={styles.tourGlow}
           />
 
-          <Text style={styles.welcomeEyebrow}>WELCOME TO DAN'AI LEAGUE</Text>
-          <Text style={styles.welcomeHeadline}>From AI Content{"\n"}to AI Adoption</Text>
-          <View style={styles.welcomeDivider} />
-          <Text style={styles.welcomeSubhead}>
-            Finance already has access to great AI tools and resources. The next step is turning <Text style={styles.welcomeBold}>awareness into adoption</Text> and <Text style={styles.welcomeBold}>learning into everyday impact</Text>.
-          </Text>
-
-          <Text style={styles.welcomeMission}>
-            Dan'AI League is designed to help Finance teams <Text style={styles.welcomeBold}>discover, learn, and apply AI</Text> through engaging experiences, practical challenges, and real-world use cases.
-          </Text>
-          <Text style={styles.welcomeMovement}>Together, we are building the future of Finance.</Text>
-
-          {/* Connected pillars */}
-          <View style={styles.pillarsWrap} testID="welcome-pillars">
-            {pillars.map((p, i) => (
-              <React.Fragment key={p.title}>
-                <View style={styles.pillarRow}>
-                  <LinearGradient
-                    colors={p.tint}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 1 }}
-                    style={styles.pillarIcon}
-                  >
-                    <Ionicons name={p.icon} size={22} color="#fff" />
-                  </LinearGradient>
-                  <View style={{ flex: 1 }}>
-                    <Text style={styles.pillarTitle}>{p.title}</Text>
-                    <Text style={styles.pillarDesc}>{p.desc}</Text>
-                  </View>
-                </View>
-                {i < pillars.length - 1 && (
-                  <View style={styles.pillarConnector}>
-                    <View style={styles.pillarConnectorLine} />
-                    <Ionicons name="chevron-down" size={16} color={colors.violet} />
-                  </View>
-                )}
-              </React.Fragment>
-            ))}
+          {/* Central emblem: glowing badge with the Dan'AI "D" mark */}
+          <View style={styles.emblemWrap} testID="welcome-emblem">
+            <View style={styles.emblemRingOuter} />
+            <View style={styles.emblemRingMid} />
+            <LinearGradient
+              colors={["#FF3B9D", "#9C6BFF", "#1F88FF"] as const}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={styles.emblemDisc}
+            >
+              <View style={styles.emblemInner}>
+                <Image
+                  source={assets.logo}
+                  style={{ width: 96, height: 96 }}
+                  contentFit="contain"
+                  transition={200}
+                />
+              </View>
+              {/* mini ribbon */}
+              <View style={styles.emblemRibbon}>
+                <Ionicons name="sparkles" size={10} color="#fff" />
+                <Text style={styles.emblemRibbonText}>LEAGUE</Text>
+              </View>
+            </LinearGradient>
           </View>
 
-          {/* Highlight card */}
-          <LinearGradient
-            colors={["rgba(255,59,157,0.16)", "rgba(156,107,255,0.12)"] as [string, string]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={styles.highlightCard}
-          >
-            <View style={styles.highlightIcon}>
-              <Ionicons name="sparkles" size={20} color={colors.neonPink} />
-            </View>
-            <View style={{ flex: 1 }}>
-              <Text style={styles.highlightTitle}>AI adoption starts with one small step.</Text>
-              <Text style={styles.highlightBody}>
-                Complete your AI Adoption Assessment to discover your starting point and unlock your personalized journey.
-              </Text>
-            </View>
-          </LinearGradient>
+          <Text style={styles.welcomeEyebrowCenter}>WELCOME TO DAN'AI LEAGUE</Text>
+          <Text style={styles.welcomeHeadlineCenter}>Finance's{"\n"}AI Adoption Game</Text>
+          <Text style={styles.welcomeSubheadCenter}>
+            A new way to learn, apply, and grow with AI — together.
+          </Text>
+          <Text style={styles.welcomeBodyCenter}>
+            Start your journey, discover your AI profile, and unlock a personalized path built for Finance.
+          </Text>
         </ScrollView>
 
         <View style={styles.footer}>
@@ -353,9 +308,10 @@ export default function OnboardingFlow({ forceShow = false, onClose }: Props) {
           {step === 1 && (
             <HighlightChips
               chips={[
-                { icon: "bulb", label: "Daily tips" },
-                { icon: "book", label: "Microlearning" },
+                { icon: "book", label: "Learning modules" },
                 { icon: "library", label: "FP&A playbooks" },
+                { icon: "rocket", label: "Use cases" },
+                { icon: "sparkles", label: "Challenges" },
               ]}
             />
           )}
@@ -365,31 +321,19 @@ export default function OnboardingFlow({ forceShow = false, onClose }: Props) {
                 { icon: "flash", label: "XP & Impact" },
                 { icon: "ribbon", label: "Badges" },
                 { icon: "trophy", label: "Leaderboard" },
-              ]}
-            />
-          )}
-          {step === 3 && (
-            <HighlightChips
-              chips={[
-                { icon: "rocket", label: "AI use cases" },
-                { icon: "sparkles", label: "Prompt library" },
-                { icon: "diamond", label: "Impact points" },
-              ]}
-            />
-          )}
-          {step === 4 && (
-            <HighlightChips
-              chips={[
-                { icon: "trending-up", label: "Maturity track" },
-                { icon: "stats-chart", label: "Achievements" },
-                { icon: "person", label: "AI persona" },
+                { icon: "trending-up", label: "Progress" },
               ]}
             />
           )}
         </ScrollView>
 
         <View style={styles.footer}>
-          <PrimaryButton label={slide.cta} onPress={() => animateTo(step + 1)} testID={`onb-tour-cta-${step}`} accent={slide.accent} />
+          <PrimaryButton
+            label={slide.cta}
+            onPress={() => animateTo(step === 2 ? 5 : step + 1)}
+            testID={`onb-tour-cta-${step}`}
+            accent={slide.accent}
+          />
         </View>
       </Animated.View>
     );
@@ -516,8 +460,9 @@ export default function OnboardingFlow({ forceShow = false, onClose }: Props) {
   };
 
   /* ------------------- progress bar ------------------- */
-  const totalSteps = 9; // 5 tour + 3 questions + 1 result
-  const progress = Math.min((step + 1) / totalSteps, 1);
+  const totalSteps = 6; // welcome + 2 tour + 3 questions (result hides bar)
+  const visibleStep = step <= 2 ? step : step - 2; // 0..5 monotonic
+  const progress = Math.min((visibleStep + 1) / totalSteps, 1);
   const inAssessment = step >= 5 && step <= 7;
   const isResult = step === 8;
 
@@ -550,7 +495,7 @@ export default function OnboardingFlow({ forceShow = false, onClose }: Props) {
 
         {/* Body */}
         {step === 0 && renderWelcome()}
-        {step >= 1 && step <= 4 && renderTour()}
+        {step >= 1 && step <= 2 && renderTour()}
         {step === 5 && renderQuestion(0)}
         {step === 6 && renderQuestion(1)}
         {step === 7 && renderQuestion(2)}
@@ -752,66 +697,59 @@ const styles = StyleSheet.create({
   btnText: { color: "#fff", fontWeight: "800", fontSize: 15 },
 
   // ---- WELCOME screen ----
-  welcomeScroll: { padding: spacing.md, paddingTop: 12, paddingBottom: 120 },
-  welcomeEyebrow: {
-    color: colors.neonPink, fontSize: 10, fontWeight: "800",
-    letterSpacing: 1.6, marginBottom: 12,
-  },
-  welcomeHeadline: {
-    color: colors.textPrimary, fontSize: 32, fontWeight: "800",
-    letterSpacing: -0.6, lineHeight: 38,
-  },
-  welcomeDivider: {
-    width: 48, height: 3, borderRadius: 100,
-    backgroundColor: colors.neonPink,
-    marginTop: 14, marginBottom: 14,
-  },
-  welcomeSubhead: {
-    color: colors.textSecondary, fontSize: 14, lineHeight: 22, fontWeight: "500",
-  },
-  welcomeBold: { color: colors.textPrimary, fontWeight: "800" },
-  welcomeMission: {
-    color: colors.textSecondary, fontSize: 14, lineHeight: 22,
-    marginTop: 14, fontWeight: "500",
-  },
-  welcomeMovement: {
-    color: colors.lightBlue, fontSize: 14, fontWeight: "800",
-    fontStyle: "italic", marginTop: 12,
-  },
-  pillarsWrap: { marginTop: 24 },
-  pillarRow: {
-    flexDirection: "row", alignItems: "center", gap: 14,
-    padding: 14, borderRadius: radii.lg,
-    backgroundColor: colors.bgSurface,
-    borderWidth: 1, borderColor: colors.borderSubtle,
-  },
-  pillarIcon: {
-    width: 44, height: 44, borderRadius: 12,
-    alignItems: "center", justifyContent: "center",
-    shadowColor: colors.neonPink, shadowOpacity: 0.4,
-    shadowRadius: 10, shadowOffset: { width: 0, height: 4 },
-  },
-  pillarTitle: { color: colors.textPrimary, fontSize: 17, fontWeight: "800" },
-  pillarDesc: { color: colors.textSecondary, fontSize: 12, lineHeight: 17, marginTop: 3 },
-  pillarConnector: { alignItems: "center", paddingVertical: 4 },
-  pillarConnectorLine: {
-    width: 2, height: 18, borderRadius: 2,
-    backgroundColor: "rgba(156,107,255,0.55)",
-  },
+  welcomeScroll: { padding: spacing.md, paddingTop: 24, paddingBottom: 140, alignItems: "center" },
 
-  highlightCard: {
-    flexDirection: "row", gap: 12,
-    padding: 16, borderRadius: radii.xl,
-    borderWidth: 1, borderColor: "rgba(255,59,157,0.35)",
-    marginTop: 22,
-    shadowColor: colors.neonPink, shadowOpacity: 0.35,
-    shadowRadius: 16, shadowOffset: { width: 0, height: 6 },
-  },
-  highlightIcon: {
-    width: 40, height: 40, borderRadius: 12,
-    backgroundColor: "rgba(255,59,157,0.18)",
+  // central emblem
+  emblemWrap: {
+    width: 220, height: 220,
     alignItems: "center", justifyContent: "center",
+    marginTop: 8, marginBottom: 18,
   },
-  highlightTitle: { color: colors.textPrimary, fontSize: 14, fontWeight: "800" },
-  highlightBody: { color: colors.textSecondary, fontSize: 12, lineHeight: 17, marginTop: 4 },
+  emblemRingOuter: {
+    position: "absolute", width: 220, height: 220, borderRadius: 110,
+    borderWidth: 1, borderColor: "rgba(255,59,157,0.18)",
+  },
+  emblemRingMid: {
+    position: "absolute", width: 184, height: 184, borderRadius: 92,
+    borderWidth: 1, borderColor: "rgba(156,107,255,0.28)",
+  },
+  emblemDisc: {
+    width: 152, height: 152, borderRadius: 76,
+    alignItems: "center", justifyContent: "center",
+    shadowColor: "#FF3B9D",
+    shadowOpacity: 0.65, shadowRadius: 30, shadowOffset: { width: 0, height: 10 },
+    elevation: 14,
+  },
+  emblemInner: {
+    width: 132, height: 132, borderRadius: 66,
+    alignItems: "center", justifyContent: "center",
+    backgroundColor: colors.bgBase,
+    borderWidth: 2, borderColor: "rgba(255,255,255,0.08)",
+  },
+  emblemRibbon: {
+    position: "absolute", bottom: -6,
+    flexDirection: "row", alignItems: "center", gap: 4,
+    paddingHorizontal: 10, paddingVertical: 4,
+    borderRadius: 100,
+    backgroundColor: "#0B152A",
+    borderWidth: 1, borderColor: "rgba(255,59,157,0.6)",
+  },
+  emblemRibbonText: { color: "#fff", fontSize: 10, fontWeight: "900", letterSpacing: 1.6 },
+
+  welcomeEyebrowCenter: {
+    color: colors.neonPink, fontSize: 10, fontWeight: "800",
+    letterSpacing: 1.6, textAlign: "center", marginTop: 4,
+  },
+  welcomeHeadlineCenter: {
+    color: colors.textPrimary, fontSize: 34, fontWeight: "800",
+    letterSpacing: -0.6, lineHeight: 40, textAlign: "center", marginTop: 10,
+  },
+  welcomeSubheadCenter: {
+    color: colors.lightBlue, fontSize: 14, fontWeight: "700",
+    textAlign: "center", marginTop: 14, paddingHorizontal: 12,
+  },
+  welcomeBodyCenter: {
+    color: colors.textSecondary, fontSize: 14, lineHeight: 22, fontWeight: "500",
+    textAlign: "center", marginTop: 14, paddingHorizontal: 8,
+  },
 });
