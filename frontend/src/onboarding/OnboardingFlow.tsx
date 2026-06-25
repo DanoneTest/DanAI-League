@@ -230,7 +230,7 @@ export default function OnboardingFlow({ forceShow = false, onClose }: Props) {
             style={styles.tourGlow}
           />
 
-          {/* Central emblem: glowing badge with the Dan'AI "D" mark */}
+          {/* Central emblem + mascot */}
           <View style={styles.emblemWrap} testID="welcome-emblem">
             <View style={styles.emblemRingOuter} />
             <View style={styles.emblemRingMid} />
@@ -254,10 +254,14 @@ export default function OnboardingFlow({ forceShow = false, onClose }: Props) {
                 <Text style={styles.emblemRibbonText}>LEAGUE</Text>
               </View>
             </LinearGradient>
+
+            {/* Mascot peeking next to the emblem */}
+            <View style={styles.welcomeMascotWrap} testID="welcome-mascot">
+              <Mascot pose="trophy" size={96} />
+            </View>
           </View>
 
-          <Text style={styles.welcomeEyebrowCenter}>WELCOME TO DAN'AI LEAGUE</Text>
-          <Text style={styles.welcomeHeadlineCenter}>Finance's{"\n"}AI Adoption Game</Text>
+          <Text style={styles.welcomeHeroTitle}>Welcome to{"\n"}Dan'AI League</Text>
           <Text style={styles.welcomeSubheadCenter}>
             A new way to learn, apply, and grow with AI — together.
           </Text>
@@ -701,9 +705,15 @@ const styles = StyleSheet.create({
 
   // central emblem
   emblemWrap: {
-    width: 220, height: 220,
+    width: 260, height: 240,
     alignItems: "center", justifyContent: "center",
-    marginTop: 8, marginBottom: 18,
+    marginTop: 4, marginBottom: 22,
+  },
+  welcomeMascotWrap: {
+    position: "absolute",
+    right: 4, bottom: -4,
+    shadowColor: "#FF3B9D", shadowOpacity: 0.5,
+    shadowRadius: 14, shadowOffset: { width: 0, height: 6 },
   },
   emblemRingOuter: {
     position: "absolute", width: 220, height: 220, borderRadius: 110,
@@ -740,13 +750,17 @@ const styles = StyleSheet.create({
     color: colors.neonPink, fontSize: 10, fontWeight: "800",
     letterSpacing: 1.6, textAlign: "center", marginTop: 4,
   },
+  welcomeHeroTitle: {
+    color: colors.textPrimary, fontSize: 40, fontWeight: "900",
+    letterSpacing: -1, lineHeight: 44, textAlign: "center", marginTop: 4,
+  },
   welcomeHeadlineCenter: {
     color: colors.textPrimary, fontSize: 34, fontWeight: "800",
     letterSpacing: -0.6, lineHeight: 40, textAlign: "center", marginTop: 10,
   },
   welcomeSubheadCenter: {
-    color: colors.lightBlue, fontSize: 14, fontWeight: "700",
-    textAlign: "center", marginTop: 14, paddingHorizontal: 12,
+    color: colors.lightBlue, fontSize: 18, fontWeight: "700",
+    textAlign: "center", marginTop: 18, paddingHorizontal: 12, lineHeight: 24,
   },
   welcomeBodyCenter: {
     color: colors.textSecondary, fontSize: 14, lineHeight: 22, fontWeight: "500",

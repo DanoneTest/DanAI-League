@@ -11,7 +11,7 @@ export const user = {
   totalXp: 8450,
   level: 18,
   tier: "AI Expert",
-  rank: 7,
+  rank: 1,
   powerUps: { skip: 2, retry: 3, hint: 1 },
 };
 
@@ -160,8 +160,8 @@ export const leaderboards: Record<string, Row[]> = {
     { rank: 4, name: "You · 3 weeks ago", team: "Prev week", country: "—", points: 6800, isUser: false },
     { rank: 5, name: "You · 4 weeks ago", team: "Prev week", country: "—", points: 6100, isUser: false },
   ],
-  "Team·Weekly": build([1, 5, 6, 7, 9], [9620, 9180, 8990, 8210, 7430], 3, 8450),
-  "Country·Weekly": build([4, 11, 0, 8, 3], [12480, 11320, 10940, 9870, 9510], 7, 8450)
+  "Team·Weekly": build([1, 5, 6, 7, 9], [9620, 9180, 8990, 8210, 7430], 1, 10250),
+  "Country·Weekly": build([4, 11, 0, 8, 3], [12480, 11320, 10940, 9870, 9510], 1, 13420)
     .concat([
       { rank: 7, name: "Camille Petit", team: "Brand", country: "🇫🇷", points: 8120, isUser: false },
       { rank: 8, name: "Hugo Bernard", team: "Trade", country: "🇫🇷", points: 7890, isUser: false },
@@ -169,7 +169,7 @@ export const leaderboards: Record<string, Row[]> = {
     ])
     .sort((a, b) => b.points - a.points)
     .map((r, i) => ({ ...r, rank: i + 1 })),
-  "Zone·Weekly": build([0, 1, 3, 4, 5, 7, 10], [13210, 11500, 10840, 10120, 9520, 9180, 8730], 8, 8450),
+  "Zone·Weekly": build([0, 1, 3, 4, 5, 7, 10], [13210, 11500, 10840, 10120, 9520, 9180, 8730], 1, 14180),
 
   // ----- MONTHLY -----
   "Personal·Monthly": [
@@ -177,17 +177,17 @@ export const leaderboards: Record<string, Row[]> = {
     { rank: 2, name: "You · last month", team: "Prev month", country: "—", points: 28100, isUser: false },
     { rank: 3, name: "You · 2 months ago", team: "Prev month", country: "—", points: 24600, isUser: false },
   ],
-  "Team·Monthly": build([5, 1, 7, 9, 6], [38120, 35640, 34280, 31900, 30540], 4, 32450),
-  "Country·Monthly": build([11, 4, 0, 8, 3], [42180, 40120, 38640, 36200, 34800], 6, 32450),
-  "Zone·Monthly": build([0, 11, 1, 4, 5, 7, 3], [52340, 48910, 46220, 44120, 41600, 39880, 37920], 8, 32450),
+  "Team·Monthly": build([5, 1, 7, 9, 6], [38120, 35640, 34280, 31900, 30540], 1, 40250),
+  "Country·Monthly": build([11, 4, 0, 8, 3], [42180, 40120, 38640, 36200, 34800], 1, 44120),
+  "Zone·Monthly": build([0, 11, 1, 4, 5, 7, 3], [52340, 48910, 46220, 44120, 41600, 39880, 37920], 1, 54480),
 
   // ----- ALL-TIME -----
   "Personal·All-time": [
     { rank: 1, name: "You · lifetime", team: "Career total", country: "🏆", points: 184500, isUser: true },
   ],
-  "Team·All-time": build([1, 5, 7, 6, 9], [212400, 198600, 184500, 167200, 152800], 3, 184500),
-  "Country·All-time": build([11, 4, 0, 8, 3], [245800, 228400, 212400, 198600, 184500], 5, 184500),
-  "Zone·All-time": build([0, 1, 11, 4, 5, 7, 10], [312500, 285400, 268700, 248200, 232400, 218600, 198500], 8, 184500),
+  "Team·All-time": build([1, 5, 7, 6, 9], [212400, 198600, 184500, 167200, 152800], 1, 224800),
+  "Country·All-time": build([11, 4, 0, 8, 3], [245800, 228400, 212400, 198600, 184500], 1, 252000),
+  "Zone·All-time": build([0, 1, 11, 4, 5, 7, 10], [312500, 285400, 268700, 248200, 232400, 218600, 198500], 1, 322000),
 };
 
 // Used by Home mini-leaderboard (a snapshot — "Country / Weekly" Top 5)
