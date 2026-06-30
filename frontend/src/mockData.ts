@@ -1,6 +1,6 @@
 export const user = {
   name: "Jürgen Esser",
-  firstName: "Jürgen",
+  firstName: "Danoner",
   team: "Deputy CEO, Finance, Technology & Data",
   country: "Paris, France",
   countryFlag: "🇫🇷",
