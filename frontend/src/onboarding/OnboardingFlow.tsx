@@ -23,6 +23,11 @@ import { assets, colors, gradients, radii, spacing, typography } from "../theme"
 const KEY_DONE = "danai_onboarding_done";
 const KEY_PERSONA = "danai_persona";
 
+
+// DEMO MODE: force onboarding on every app launch / refresh
+const DEMO_ALWAYS_SHOW_ONBOARDING = true;
+
+
 /* ------------------- assessment data ------------------- */
 type Persona = "Explorer" | "Practitioner" | "Champion";
 
@@ -171,8 +176,19 @@ export default function OnboardingFlow({ forceShow = false, onClose }: Props) {
   const fade = useRef(new Animated.Value(1)).current;
 
   // First-launch check
+
   useEffect(() => {
     (async () => {
+      if (DEMO_ALWAYS_SHOW_ONBOARDING) {
+        setSavedPersona(null);
+        setQ1(null);
+        setQ2(null);
+        setQ3(null);
+        setStep(0);
+        setVisible(true);
+        return;
+      }
+  
       if (forceShow) {
         const stored = (await AsyncStorage.getItem(KEY_PERSONA)) as Persona | null;
         if (stored) {
@@ -184,6 +200,7 @@ export default function OnboardingFlow({ forceShow = false, onClose }: Props) {
         setVisible(true);
         return;
       }
+  
       try {
         const done = await AsyncStorage.getItem(KEY_DONE);
         if (!done) setVisible(true);
@@ -192,6 +209,7 @@ export default function OnboardingFlow({ forceShow = false, onClose }: Props) {
       }
     })();
   }, [forceShow]);
+  
 
   const animateTo = (nextStep: number) => {
     Animated.timing(fade, { toValue: 0, duration: 140, useNativeDriver: true, easing: Easing.out(Easing.ease) }).start(() => {
