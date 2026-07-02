@@ -78,6 +78,7 @@ export default function Mascot({
               style={{ width: inner, height: inner }}
               contentFit="contain"
               transition={150}
+              cachePolicy="none"
             />
           </View>
           <View
@@ -94,6 +95,7 @@ export default function Mascot({
           style={{ width: size, height: size }}
           contentFit="contain"
           transition={150}
+          cachePolicy="none"
         />
       )}
     </View>

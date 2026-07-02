@@ -18,7 +18,8 @@ node_modules/
 
 # Testing
 /coverage
-
+.metrocache/
+frontend/.metrocache
 # Next.js
 /.next/
 /out/

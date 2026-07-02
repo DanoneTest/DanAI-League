@@ -18,6 +18,7 @@ export default function Logo({ compact = false, testID = "app-logo" }: Props) {
           style={styles.dImage}
           contentFit="contain"
           transition={200}
+          cachePolicy="none"
         />
       </View>
       {!compact && (

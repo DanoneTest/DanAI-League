@@ -38,15 +38,13 @@ export const spacing = {
   xl: 32,
 };
 
+// Using CDN URLs to avoid bundling large PNG files (5.9 MB)
+// This prevents LocalStorage quota errors on web
 export const assets = {
-  logo:
-    "https://customer-assets.emergentagent.com/job_ai-upskill-hub-3/artifacts/7tftca5h_Logo_D_only-removebg-preview.png",
-  mascotHappy:
-    "https://customer-assets.emergentagent.com/job_c09f872e-dc91-4153-b57f-ec15f90147f8/artifacts/ab3lrs3v_Maia_happy_white%20background.png",
-  mascotTrophy:
-    "https://customer-assets.emergentagent.com/job_c09f872e-dc91-4153-b57f-ec15f90147f8/artifacts/nbw47g1p_Maia_trophy.png",
-  mascotSad:
-    "https://customer-assets.emergentagent.com/job_c09f872e-dc91-4153-b57f-ec15f90147f8/artifacts/mqdaimuz_Maia_sad_white%20background.png",
+  logo: "https://customer-assets.emergentagent.com/job_ai-upskill-hub-3/artifacts/7tftca5h_Logo_D_only-removebg-preview.png",
+  mascotHappy: "https://customer-assets.emergentagent.com/job_c09f872e-dc91-4153-b57f-ec15f90147f8/artifacts/ab3lrs3v_Maia_happy_white%20background.png",
+  mascotTrophy: "https://customer-assets.emergentagent.com/job_c09f872e-dc91-4153-b57f-ec15f90147f8/artifacts/nbw47g1p_Maia_trophy.png",
+  mascotSad: "https://customer-assets.emergentagent.com/job_c09f872e-dc91-4153-b57f-ec15f90147f8/artifacts/mqdaimuz_Maia_sad_white%20background.png",
 };
 
 export const typography = {

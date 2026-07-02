@@ -213,8 +213,8 @@ export default function OnboardingFlow({ forceShow = false, onClose }: Props) {
 
   const animateTo = (nextStep: number) => {
     Animated.timing(fade, { toValue: 0, duration: 140, useNativeDriver: true, easing: Easing.out(Easing.ease) }).start(() => {
+      fade.setValue(1);
       setStep(nextStep);
-      Animated.timing(fade, { toValue: 1, duration: 220, useNativeDriver: true, easing: Easing.out(Easing.ease) }).start();
     });
   };
 
@@ -302,6 +302,8 @@ export default function OnboardingFlow({ forceShow = false, onClose }: Props) {
 
   const renderTour = () => {
     const slide = tourSlides[step];
+    if (!slide) return null;
+    
     return (
       <Animated.View style={[styles.flex1, { opacity: fade }]}>
         <ScrollView contentContainerStyle={styles.tourScroll} showsVerticalScrollIndicator={false}>
