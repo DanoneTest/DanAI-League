@@ -32,6 +32,10 @@ jobs:
       - name: Build web
         working-directory: ./frontend
         run: npx expo export --platform web
+
+      - name: Add 404 fallback for GitHub Pages
+        working-directory: ./frontend
+        run: cp dist/+not-found.html dist/404.html
         
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
