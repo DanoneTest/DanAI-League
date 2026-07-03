@@ -1,7 +1,7 @@
 export const user = {
-  name: "Jürgen Esser",
+  name: "",
   firstName: "Danoner",
-  team: "Deputy CEO, Finance, Technology & Data",
+  team: "Finance team",
   country: "Paris, France",
   countryFlag: "🇫🇷",
   streak: 14,
